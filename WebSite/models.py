@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 
-class Customer(db.model,UserMixin):
+class Customer(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100),unique=True)
     username = db.Column(db.String(100))
@@ -14,6 +14,7 @@ class Customer(db.model,UserMixin):
 
     cart_items = db.relationship('Cart', backref=db.backref('customer',lazy=True))
     orders = db.relationship('Order', backref=db.backref('customer',lazy=True))
+    
     @property
     def password(self):
         raise ArithmeticError('Password is not a readable Attribute')
@@ -26,12 +27,12 @@ class Customer(db.model,UserMixin):
         return check_password_hash(self.password_hash,password=password)
     
     def __str__(self):
-        return '<Customer %r' % Customer.id
+        return '<Customer %r' % self.id
 
 
 
 
-class Product(db.model):
+class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(100),nullable=False)
     current_price = db.Column(db.Float,nullable=False)
@@ -49,7 +50,7 @@ class Product(db.model):
 
 
 
-class Cart(db.model):
+class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     qyantity = db.Column(db.Integer,nullable=False)
     
@@ -60,7 +61,7 @@ class Cart(db.model):
         return '<Cart %r' % self.id
 
 
-class Order(db.model):
+class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     qyantity = db.Column(db.Integer,nullable=False)
     price = db.Column(db.Float,nullable=False)

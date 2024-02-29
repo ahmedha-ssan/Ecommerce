@@ -22,21 +22,22 @@
 
     <link rel="stylesheet" href="{{ url_for('static',filename='css/all.min.css')}}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
+    {% if page_name == 'signup' %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/forms.css')}}">
+    {% else %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+    {% endif %}
     <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/icon.png') }}">
 
 
-    <title>Amonsa | {% block title %} {% endblock %}</title>
+    <title>Amona | {% block title %} {% endblock %}</title>
 </head>
 
 <body style="background-color: rgb(201, 200, 211);">
     {% include 'navBar.html' %}
 
     <br /><br />
-    {% block body %}
 
-
-    {% endblock %}
 
     {% for message in get_flashed_messages() %}
     <div class="alert alert-success alert-dismissable fade show" role="alert" style="margin-top: 5px;">
@@ -46,6 +47,10 @@
     </div>
     {% endfor %}
 
+    {% block body %}
+
+
+    {% endblock %}
 
 
     <footer class="footer">
