@@ -14,3 +14,9 @@ class Loginform(FlaskForm):
     email = EmailField("Email",validators=[DataRequired()])
     password = PasswordField("Enter your password",validators=[DataRequired()])
     submit = SubmitField("Login")
+
+class PasswordChangeForm(FlaskForm):
+    current_password = PasswordField('Current Password', validators=[DataRequired(),Length(min=6)])
+    new_password = PasswordField('New Password', validators=[DataRequired(),Length(min=6)])
+    confirm_new_password = PasswordField('Confirm New Password', validators=[DataRequired(),Length(min=6)])
+    change_password = SubmitField('Change Password')

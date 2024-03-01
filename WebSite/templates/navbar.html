@@ -49,13 +49,17 @@
                     Account
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                    <li><a class="dropdown-item" href="#">Profile <i class="fa-solid fa-user"></i></a></li>
+
+                    {% if current_user.is_authenticated %}
+                    <li><a class="dropdown-item" href="/profile/{{ current_user.id }}">Profile <i
+                                class="fa-solid fa-user"></i></a></li>
                     <li><a class="dropdown-item" href="#">Orders <i class="fa-solid fa-truck-fast"></i></a></li>
                     <li><a class="dropdown-item" href="/logout">Log Out <i
                                 class="fa-solid fa-right-from-bracket"></i></a></li>
+                    {% else %}
                     <li><a class="dropdown-item" href="/login">Login <i class="fa-solid fa-right-to-bracket"></i></a>
                     </li>
-
+                    {% endif %}
                 </ul>
             </li>
         </ul>
