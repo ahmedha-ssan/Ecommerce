@@ -43,35 +43,30 @@ class Product(db.Model):
     date_added = db.Column(db.DateTime(),default=datetime.utcnow)
     
     carts = db.relationship('Cart', backref=db.backref('product',lazy=True))
-    orders = db.relationship('Order', backref=db.backref('order',lazy=True))
-
+    orders = db.relationship('Order', backref=db.backref('product',lazy=True))
     def __str__(self):
         return '<Product %r' % self.product_name
 
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    qyantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(100), nullable=False)
+    payment_id = db.Column(db.String(1000), nullable=False)
 
+    customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    product_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    
+    def __str__(self):
+        return '<Order %r>' % self.id
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     qyantity = db.Column(db.Integer,nullable=False)
-    
     customer_link = db.Column(db.Integer,db.ForeignKey('customer.id'), nullable=False)
     product_link = db.Column(db.Integer,db.ForeignKey('product.id'), nullable=False)
-    
     def __str__(self):
         return '<Cart %r' % self.id
 
 
-class Order(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    qyantity = db.Column(db.Integer,nullable=False)
-    price = db.Column(db.Float,nullable=False)
-    status = db.Column(db.String(100),nullable=False)
-    payment_id = db.Column(db.String(1000),nullable=False)
 
-    customer_link = db.Column(db.Integer,db.ForeignKey('customer.id'), nullable=False)
-    product_link = db.Column(db.Integer,db.ForeignKey('product.id'), nullable=False)
-    
-    def __str__(self):
-        return '<Order %r' % self.id
-
-    
